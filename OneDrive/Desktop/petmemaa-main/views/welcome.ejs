@@ -1,0 +1,301 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Boarding Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+        }
+        .header img {
+            width: 450px;
+            height:250px;
+        }
+        .header h1 {
+            margin: 10px 0;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .section h2 {
+            background-color: #f08080;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .form-group {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .form-group label {
+            flex: 1;
+            margin-right: 10px;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            flex: 2;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .form-group input[type="radio"] {
+            flex: none;
+            margin-right: 5px;
+        }
+        
+        .form-buttons {
+          display: flex;
+          justify-content:center;
+          margin-top: 20px;
+          
+      }
+      .form-buttons button {
+          padding: 10px 20px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          margin:0 5px;
+      }
+      .form-buttons button[type="submit"] {
+          background-color: #4CAF50;
+          color: white;
+      }
+      .form-buttons button[type="reset"] {
+          background-color: #f44336;
+          color: white;
+      }
+    </style>
+    <script src="/main.js" defer></script>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <img src="pet1.jpg" alt="Pet Me Maa">
+        <h1>Boarding Form</h1>
+        <p>Info / Instruction Sheet</p>
+    </div>
+    <form id="boarding-form" action="/boarding" method="post">
+    <div class="section">
+        <h2>Hi! This is my info:</h2>
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="breed">Breed:</label>
+            <input type="text" id="breed" name="breed" required>
+        </div>
+        <div class="form-group">
+            <label>Gender:</label>
+            <input type="radio" id="male" name="gender" value="male" required>
+            <label for="male">Male</label>
+            <input type="radio" id="female" name="gender" value="female" required>
+            <label for="female">Female</label>
+        </div>
+        <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="text" id="age" name="age" required>
+        </div>
+        <div class="form-group">
+            <label>Neutered/Spayed:</label>
+            <input type="radio" id="yes" name="neutered_spayed" value="yes" required>
+            <label for="yes">Yes</label>
+            <input type="radio" id="no" name="neutered_spayed" value="no" required>
+            <label for="no">No</label>
+        </div>
+        <div class="form-group">
+            <label for="color">Color:</label>
+            <input type="text" id="color" name="color" required>
+        </div>
+        <div class="form-group">
+            <label for="weight">Weight:</label>
+            <input type="text" id="weight" name="weight" required>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>My Parent's Info:</h2>
+        <div class="form-group">
+            <label for="parent_name">Parent's Name:</label>
+            <input type="text" id="parent_name" name="parent_name" required>
+        </div>
+        <div class="form-group">
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" required>
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone No.:</label>
+            <input type="text" id="phone" name="phone" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="id_proof">Parent's ID Proof (Adhar No./Pan card):</label>
+            <input type="text" id="id_proof" name="id_proof" required>
+        </div>
+        <div class="form-group">
+            <label for="referred_by">Referred by:</label>
+            <input type="text" id="referred_by" name="referred_by" required>
+        </div>
+        <div class="form-group">
+            <label for="emergency_contact_name">Emergency Contact Name:</label>
+            <input type="text" id="emergency_contact_name" name="emergency_contact_name" required>
+        </div>
+        <div class="form-group">
+            <label for="emergency_phone">Emergency Phone No.:</label>
+            <input type="text" id="emergency_phone" name="emergency_phone" required>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Vet Info:</h2>
+        <div class="form-group">
+            <label for="vet_name">Vet Name:</label>
+            <input type="text" id="vet_name" name="vet_name" required>
+        </div>
+        <div class="form-group">
+            <label for="vet_contact">Vet Contact:</label>
+            <input type="text" id="vet_contact" name="vet_contact" required>
+        </div>
+        <div class="form-group">
+            <label for="vet_address">Vet Address:</label>
+            <input type="text" id="vet_address" name="vet_address" required>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>My Food Habits:</h2>
+        <div class="form-group">
+            <label for="morning">Morning:</label>
+            <input type="text" id="morning" name="morning" required>
+        </div>
+        <div class="form-group">
+            <label for="afternoon">Afternoon:</label>
+            <input type="text" id="afternoon" name="afternoon" required>
+        </div>
+        <div class="form-group">
+            <label for="evening">Evening:</label>
+            <input type="text" id="evening" name="evening" required>
+        </div>
+        <div class="form-group">
+            <label for="night">Night:</label>
+            <input type="text" id="night" name="night" required>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Vaccination:</h2>
+        <div class="form-group">
+            <label
+                style="font-weight: bold; color: #4CAF50; font-size: 1.2em; background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(239,239,239,1) 100%); padding: 5px 10px; border-radius: 5px;">Anti
+                Rabies:</label>
+            <div class="form-group">
+                <label for="anti_rabies_given_date">Given Date</label>
+                <input type="date" id="anti_rabies_given_date" name="anti_rabies_given_date" required>
+            </div>
+            <div class="form-group">
+                <label for="anti_rabies_due_date">Due Date</label>
+                <input type="date" id="anti_rabies_due_date" name="anti_rabies_due_date" readonly>
+            </div>
+        </div>
+        <div class="form-group">
+            <label
+                style="font-weight: bold; color: #4CAF50; font-size: 1.2em; background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(239,239,239,1) 100%); padding: 5px 10px; border-radius: 5px;">9
+                in 1:</label>
+            <div class="form-group">
+                <label for="nine_in_one_given_date">Given Date</label>
+                <input type="date" id="nine_in_one_given_date" name="nine_in_one_given_date" required>
+            </div>
+            <div class="form-group">
+                <label for="nine_in_one_due_date">Due Date</label>
+                <input type="date" id="nine_in_one_due_date" name="nine_in_one_due_date" readonly>
+            </div>
+        </div>
+        <div class="form-group">
+            <label
+                style="font-weight: bold; color: #4CAF50; font-size: 1.2em; background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(239,239,239,1) 100%); padding: 5px 10px; border-radius: 5px;">Canine
+                Corona:</label>
+            <div class="form-group">
+                <label for="canine_corona_given_date">Given Date</label>
+                <input type="date" id="canine_corona_given_date" name="canine_corona_given_date" required>
+            </div>
+            <div class="form-group">
+                <label for="canine_corona_due_date">Due Date</label>
+                <input type="date" id="canine_corona_due_date" name="canine_corona_due_date" readonly>
+            </div>
+        </div>
+        <div class="form-group">
+            <label
+                style="font-weight: bold; color: #4CAF50; font-size: 1.2em; background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(239,239,239,1) 100%); padding: 5px 10px; border-radius: 5px;">Kennel
+                Cough/Bordetella:</label>
+            <div class="form-group">
+                <label for="kennel_cough_given_date">Given Date</label>
+                <input type="date" id="kennel_cough_given_date" name="kennel_cough_given_date" required>
+            </div>
+            <div class="form-group">
+                <label for="kennel_cough_due_date">Due Date</label>
+                <input type="date" id="kennel_cough_due_date" name="kennel_cough_due_date" readonly>
+            </div>
+        </div>
+        <div class="form-group">
+            <label
+                style="font-weight: bold; color: #4CAF50; font-size: 1.2em; background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(239,239,239,1) 100%); padding: 5px 10px; border-radius: 5px;">Deworming:</label>
+            <div class="form-group">
+                <label for="deworming_given_date">Given Date</label>
+                <input type="date" id="deworming_given_date" name="deworming_given_date" required>
+            </div>
+            <div class="form-group">
+                <label for="deworming_due_date">Due Date</label>
+                <input type="date" id="deworming_due_date" name="deworming_due_date" readonly>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Medical Conditions:</h2>
+        <div class="form-group">
+            <label for="food_allergies">Food Allergies:</label>
+            <input type="text" id="food_allergies" name="food_allergies" required>
+        </div>
+        <div class="form-group">
+            <label for="major_surgery">Major Surgery/Illness (Dates and Type):</label>
+            <textarea id="major_surgery" name="major_surgery" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="special_needs">Other Special Needs/Comments:</label>
+            <textarea id="special_needs" name="special_needs" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="attacks">Has your pet ever attacked any person or animal? (If yes, please explain):</label>
+            <textarea id="attacks" name="attacks" rows="3"></textarea>
+        </div>
+    </div>
+    <div class="form-buttons">
+      <button type="submit">Submit</button>
+      <button type="reset">Reset</button>
+    </div>
+  </form>
+</div>
+
+</body>
+</html>
