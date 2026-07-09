@@ -1,301 +1,582 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pet Boarding Form</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            max-width: 800px;
-            margin: auto;
-        }
-        .header {
-            text-align: center;
-            padding-bottom: 20px;
-        }
-        .header img {
-            width: 450px;
-            height:250px;
-        }
-        .header h1 {
-            margin: 10px 0;
-        }
-        .section {
-            margin-bottom: 20px;
-        }
-        .section h2 {
-            background-color: #f08080;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-        }
-        .form-group {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-        .form-group label {
-            flex: 1;
-            margin-right: 10px;
-        }
-        .form-group input, .form-group select, .form-group textarea {
-            flex: 2;
-            padding: 5px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        .form-group input[type="radio"] {
-            flex: none;
-            margin-right: 5px;
-        }
-        
-        .form-buttons {
-          display: flex;
-          justify-content:center;
-          margin-top: 20px;
-          
-      }
-      .form-buttons button {
-          padding: 10px 20px;
-          border: none;
-          border-radius: 5px;
-          cursor: pointer;
-          margin:0 5px;
-      }
-      .form-buttons button[type="submit"] {
-          background-color: #4CAF50;
-          color: white;
-      }
-      .form-buttons button[type="reset"] {
-          background-color: #f44336;
-          color: white;
-      }
-    </style>
-    <script src="/main.js" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pet Me Maa — Boarding Registration</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cover:#1B2A4A;
+    --cover-deep:#131f39;
+    --brass:#B8935F;
+    --brass-light:#D8BD8F;
+    --paper:#FBF7EF;
+    --paper-shadow:#EFE7D6;
+    --ink:#22262B;
+    --ink-soft:#5B5F66;
+    --sage:#4B7B5D;
+    --sage-bg:#E8F0E9;
+    --rust:#A8422C;
+    --line:#DCD3BE;
+    --radius:10px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1200px 600px at 15% -10%, #23345c 0%, transparent 60%),
+      var(--cover-deep);
+    color:var(--ink);
+    font-family:'Public Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+
+  /* ---------- COVER HEADER ---------- */
+  .cover{
+    position:relative;
+    color:#fff;
+    padding:64px 24px 88px;
+    text-align:center;
+    overflow:hidden;
+    background:
+      linear-gradient(180deg, var(--cover) 0%, var(--cover-deep) 100%);
+  }
+  .cover::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      repeating-linear-gradient(135deg, rgba(184,147,95,0.06) 0 2px, transparent 2px 26px);
+    pointer-events:none;
+  }
+  .crest{
+    width:150px; height:150px;
+    margin:0 auto 26px;
+    background:var(--paper);
+    border-radius:50%;
+    border:3px solid var(--brass);
+    box-shadow:
+      0 0 0 6px var(--cover-deep),
+      0 0 0 7px rgba(184,147,95,0.35),
+      0 18px 40px rgba(0,0,0,0.35);
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+    position:relative;
+    padding:6px;
+  }
+  .crest img{
+    width:100%; height:100%; object-fit:contain;
+    border-radius:50%;
+  }
+  .eyebrow{
+    letter-spacing:.24em; text-transform:uppercase;
+    font-size:.72rem; color:var(--brass-light); font-weight:600;
+    margin-bottom:10px;
+  }
+  .cover h1{
+    font-family:'Fraunces', serif; font-weight:600;
+    font-size:clamp(2rem, 5vw, 2.9rem);
+    margin:0 0 8px;
+    letter-spacing:.01em;
+  }
+  .cover .sub{
+    color:#C9D2E4; font-size:1rem; max-width:440px; margin:0 auto;
+  }
+  .cover .serial{
+    margin-top:26px; font-size:.75rem; letter-spacing:.14em;
+    color:rgba(255,255,255,0.45); text-transform:uppercase;
+  }
+
+  /* ---------- LAYOUT SHELL ---------- */
+  .shell{
+    max-width:760px;
+    margin:-56px auto 60px;
+    position:relative;
+    z-index:2;
+  }
+
+  /* Main paper area */
+  .pages{
+    background:var(--paper);
+    border-radius:var(--radius);
+    box-shadow:0 24px 60px rgba(0,0,0,0.28);
+    padding:44px 48px 30px;
+  }
+  .mandatory-note{
+    text-align:right; font-size:.78rem; color:var(--rust);
+    font-weight:600; margin:0 0 26px;
+  }
+
+  /* Section = one "page spread" */
+  .page{
+    padding-bottom:38px; margin-bottom:38px;
+    border-bottom:1px dashed var(--line);
+    scroll-margin-top:24px;
+  }
+  .page:last-of-type{ border-bottom:none; }
+  .page-head{
+    display:flex; align-items:baseline; gap:14px; margin-bottom:26px;
+  }
+  .page-head .num{
+    font-family:'Fraunces', serif; font-style:italic; font-weight:500;
+    color:var(--brass); font-size:1.6rem; line-height:1;
+  }
+  .page-head h2{
+    font-family:'Fraunces', serif; font-weight:600; font-size:1.4rem;
+    margin:0; color:var(--cover);
+  }
+  .page-head .stamp-hint{
+    margin-left:auto; font-size:.76rem; color:var(--ink-soft);
+    font-style:italic;
+  }
+
+  .field{
+    display:grid; grid-template-columns:220px 1fr; gap:16px;
+    align-items:center; margin-bottom:18px;
+  }
+  .field > label{
+    font-weight:600; font-size:.88rem; color:var(--ink);
+  }
+  .field > label.req::after{ content:" *"; color:var(--rust); }
+
+  input[type="text"], input[type="email"], input[type="tel"],
+  input[type="number"], input[type="date"], input[type="file"],
+  select, textarea{
+    width:100%; font-family:inherit; font-size:.94rem; color:var(--ink);
+    background:#fff; border:1px solid var(--line); border-radius:6px;
+    padding:10px 13px; transition:border-color .15s, box-shadow .15s;
+  }
+  input:focus, select:focus, textarea:focus{
+    outline:none; border-color:var(--brass);
+    box-shadow:0 0 0 3px rgba(184,147,95,0.18);
+  }
+  input[readonly]{ background:#F2EFE6; color:var(--ink-soft); cursor:not-allowed; }
+  textarea{ resize:vertical; }
+
+  .radio-row{ display:flex; gap:20px; align-items:center; }
+  .radio-row label{ font-weight:400; font-size:.92rem; }
+  .radio-row input{ width:auto; margin-right:6px; accent-color:var(--brass); }
+
+  .age-row{ display:flex; gap:10px; }
+  .age-row input{ flex:1; }
+
+  /* Vaccination record rows */
+  .vax{
+    border:1px solid var(--line); border-radius:8px;
+    padding:18px 20px; margin-bottom:16px; background:#fff;
+    position:relative; overflow:hidden;
+  }
+  .vax-title{
+    font-weight:700; font-size:.94rem; color:var(--cover);
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .vax-title .dot{ width:7px; height:7px; border-radius:50%; background:var(--brass); }
+  .vax-grid{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
+  .vax-grid label{
+    display:block; font-size:.76rem; font-weight:600; color:var(--ink-soft);
+    margin-bottom:5px;
+  }
+  .stamp{
+    position:absolute; top:14px; right:18px;
+    border:2px solid var(--sage); color:var(--sage);
+    border-radius:50%; width:58px; height:58px;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces', serif; font-weight:700; font-size:.62rem;
+    text-transform:uppercase; letter-spacing:.03em; text-align:center;
+    transform:rotate(-12deg) scale(0);
+    transition:transform .35s cubic-bezier(.34,1.56,.64,1);
+    opacity:0; background:var(--sage-bg);
+    pointer-events:none;
+  }
+  .stamp.show{ transform:rotate(-12deg) scale(1); opacity:1; }
+
+  /* Buttons */
+  .actions{
+    display:flex; justify-content:center; gap:16px; margin-top:12px;
+  }
+  button{
+    font-family:inherit; font-size:1rem; font-weight:700;
+    padding:14px 38px; border-radius:8px; border:none; cursor:pointer;
+    transition:transform .15s, box-shadow .15s, background .15s;
+  }
+  .btn-submit{
+    background:var(--cover); color:#fff;
+    box-shadow:0 10px 24px rgba(27,42,74,0.28);
+  }
+  .btn-submit:hover{ transform:translateY(-2px); background:var(--cover-deep); }
+  .btn-submit:disabled{ background:#9aa1ad; box-shadow:none; transform:none; cursor:not-allowed; }
+  .btn-reset{ background:transparent; color:var(--ink-soft); border:1px solid var(--line); }
+  .btn-reset:hover{ background:var(--paper-shadow); color:var(--ink); }
+
+  /* Success view */
+  .success{
+    display:none; text-align:center; padding:90px 40px 100px;
+  }
+  .success .seal{
+    width:84px; height:84px; margin:0 auto 24px;
+    border:2px solid var(--sage); border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--sage-bg); color:var(--sage); font-size:2.2rem;
+  }
+  .success h2{ font-family:'Fraunces', serif; color:var(--cover); font-size:1.8rem; margin:0 0 10px;}
+  .success p{ color:var(--ink-soft); max-width:420px; margin:0 auto 28px; }
+  .success a{
+    display:inline-block; background:var(--cover); color:#fff; text-decoration:none;
+    padding:12px 30px; border-radius:8px; font-weight:700;
+  }
+
+  @media (max-width: 820px){
+    .crest{ width:100px; height:100px; }
+    .shell{ margin-top:-30px; }
+    .pages{ padding:32px 22px 20px; }
+    .field{ grid-template-columns:1fr; gap:6px; }
+    .vax-grid{ grid-template-columns:1fr; }
+    .stamp{ position:static; margin:10px 0 0 auto; transform:rotate(0) scale(1); opacity:1; display:none; }
+    .stamp.show{ display:flex; }
+    .actions{ flex-direction:column; }
+  }
+</style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
-        <img src="pet1.jpg" alt="Pet Me Maa">
-        <h1>Boarding Form</h1>
-        <p>Info / Instruction Sheet</p>
-    </div>
-    <form id="boarding-form" action="/boarding" method="post">
-    <div class="section">
-        <h2>Hi! This is my info:</h2>
-        <div class="form-group">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
-        </div>
-        <div class="form-group">
-            <label for="breed">Breed:</label>
-            <input type="text" id="breed" name="breed" required>
-        </div>
-        <div class="form-group">
-            <label>Gender:</label>
-            <input type="radio" id="male" name="gender" value="male" required>
-            <label for="male">Male</label>
-            <input type="radio" id="female" name="gender" value="female" required>
-            <label for="female">Female</label>
-        </div>
-        <div class="form-group">
-            <label for="age">Age:</label>
-            <input type="text" id="age" name="age" required>
-        </div>
-        <div class="form-group">
-            <label>Neutered/Spayed:</label>
-            <input type="radio" id="yes" name="neutered_spayed" value="yes" required>
-            <label for="yes">Yes</label>
-            <input type="radio" id="no" name="neutered_spayed" value="no" required>
-            <label for="no">No</label>
-        </div>
-        <div class="form-group">
-            <label for="color">Color:</label>
-            <input type="text" id="color" name="color" required>
-        </div>
-        <div class="form-group">
-            <label for="weight">Weight:</label>
-            <input type="text" id="weight" name="weight" required>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2>My Parent's Info:</h2>
-        <div class="form-group">
-            <label for="parent_name">Parent's Name:</label>
-            <input type="text" id="parent_name" name="parent_name" required>
-        </div>
-        <div class="form-group">
-            <label for="address">Address:</label>
-            <input type="text" id="address" name="address" required>
-        </div>
-        <div class="form-group">
-            <label for="phone">Phone No.:</label>
-            <input type="text" id="phone" name="phone" required>
-        </div>
-        <div class="form-group">
-            <label for="email">Email Address:</label>
-            <input type="email" id="email" name="email" required>
-        </div>
-        <div class="form-group">
-            <label for="id_proof">Parent's ID Proof (Adhar No./Pan card):</label>
-            <input type="text" id="id_proof" name="id_proof" required>
-        </div>
-        <div class="form-group">
-            <label for="referred_by">Referred by:</label>
-            <input type="text" id="referred_by" name="referred_by" required>
-        </div>
-        <div class="form-group">
-            <label for="emergency_contact_name">Emergency Contact Name:</label>
-            <input type="text" id="emergency_contact_name" name="emergency_contact_name" required>
-        </div>
-        <div class="form-group">
-            <label for="emergency_phone">Emergency Phone No.:</label>
-            <input type="text" id="emergency_phone" name="emergency_phone" required>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2>Vet Info:</h2>
-        <div class="form-group">
-            <label for="vet_name">Vet Name:</label>
-            <input type="text" id="vet_name" name="vet_name" required>
-        </div>
-        <div class="form-group">
-            <label for="vet_contact">Vet Contact:</label>
-            <input type="text" id="vet_contact" name="vet_contact" required>
-        </div>
-        <div class="form-group">
-            <label for="vet_address">Vet Address:</label>
-            <input type="text" id="vet_address" name="vet_address" required>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2>My Food Habits:</h2>
-        <div class="form-group">
-            <label for="morning">Morning:</label>
-            <input type="text" id="morning" name="morning" required>
-        </div>
-        <div class="form-group">
-            <label for="afternoon">Afternoon:</label>
-            <input type="text" id="afternoon" name="afternoon" required>
-        </div>
-        <div class="form-group">
-            <label for="evening">Evening:</label>
-            <input type="text" id="evening" name="evening" required>
-        </div>
-        <div class="form-group">
-            <label for="night">Night:</label>
-            <input type="text" id="night" name="night" required>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2>Vaccination:</h2>
-        <div class="form-group">
-            <label
-                style="font-weight: bold; color: #4CAF50; font-size: 1.2em; background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(239,239,239,1) 100%); padding: 5px 10px; border-radius: 5px;">Anti
-                Rabies:</label>
-            <div class="form-group">
-                <label for="anti_rabies_given_date">Given Date</label>
-                <input type="date" id="anti_rabies_given_date" name="anti_rabies_given_date" required>
-            </div>
-            <div class="form-group">
-                <label for="anti_rabies_due_date">Due Date</label>
-                <input type="date" id="anti_rabies_due_date" name="anti_rabies_due_date" readonly>
-            </div>
-        </div>
-        <div class="form-group">
-            <label
-                style="font-weight: bold; color: #4CAF50; font-size: 1.2em; background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(239,239,239,1) 100%); padding: 5px 10px; border-radius: 5px;">9
-                in 1:</label>
-            <div class="form-group">
-                <label for="nine_in_one_given_date">Given Date</label>
-                <input type="date" id="nine_in_one_given_date" name="nine_in_one_given_date" required>
-            </div>
-            <div class="form-group">
-                <label for="nine_in_one_due_date">Due Date</label>
-                <input type="date" id="nine_in_one_due_date" name="nine_in_one_due_date" readonly>
-            </div>
-        </div>
-        <div class="form-group">
-            <label
-                style="font-weight: bold; color: #4CAF50; font-size: 1.2em; background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(239,239,239,1) 100%); padding: 5px 10px; border-radius: 5px;">Canine
-                Corona:</label>
-            <div class="form-group">
-                <label for="canine_corona_given_date">Given Date</label>
-                <input type="date" id="canine_corona_given_date" name="canine_corona_given_date" required>
-            </div>
-            <div class="form-group">
-                <label for="canine_corona_due_date">Due Date</label>
-                <input type="date" id="canine_corona_due_date" name="canine_corona_due_date" readonly>
-            </div>
-        </div>
-        <div class="form-group">
-            <label
-                style="font-weight: bold; color: #4CAF50; font-size: 1.2em; background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(239,239,239,1) 100%); padding: 5px 10px; border-radius: 5px;">Kennel
-                Cough/Bordetella:</label>
-            <div class="form-group">
-                <label for="kennel_cough_given_date">Given Date</label>
-                <input type="date" id="kennel_cough_given_date" name="kennel_cough_given_date" required>
-            </div>
-            <div class="form-group">
-                <label for="kennel_cough_due_date">Due Date</label>
-                <input type="date" id="kennel_cough_due_date" name="kennel_cough_due_date" readonly>
-            </div>
-        </div>
-        <div class="form-group">
-            <label
-                style="font-weight: bold; color: #4CAF50; font-size: 1.2em; background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(239,239,239,1) 100%); padding: 5px 10px; border-radius: 5px;">Deworming:</label>
-            <div class="form-group">
-                <label for="deworming_given_date">Given Date</label>
-                <input type="date" id="deworming_given_date" name="deworming_given_date" required>
-            </div>
-            <div class="form-group">
-                <label for="deworming_due_date">Due Date</label>
-                <input type="date" id="deworming_due_date" name="deworming_due_date" readonly>
-            </div>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2>Medical Conditions:</h2>
-        <div class="form-group">
-            <label for="food_allergies">Food Allergies:</label>
-            <input type="text" id="food_allergies" name="food_allergies" required>
-        </div>
-        <div class="form-group">
-            <label for="major_surgery">Major Surgery/Illness (Dates and Type):</label>
-            <textarea id="major_surgery" name="major_surgery" rows="3"></textarea>
-        </div>
-        <div class="form-group">
-            <label for="special_needs">Other Special Needs/Comments:</label>
-            <textarea id="special_needs" name="special_needs" rows="3"></textarea>
-        </div>
-        <div class="form-group">
-            <label for="attacks">Has your pet ever attacked any person or animal? (If yes, please explain):</label>
-            <textarea id="attacks" name="attacks" rows="3"></textarea>
-        </div>
-    </div>
-    <div class="form-buttons">
-      <button type="submit">Submit</button>
-      <button type="reset">Reset</button>
-    </div>
-  </form>
+<div class="cover">
+  <div class="crest">
+    <img src="petmemaa_logo.jpeg" alt="Pet Me Maa">
+  </div>
+  <div class="eyebrow">Boarding Registration Record</div>
+  <h1>Register Your Companion</h1>
+  <p class="sub">A complete record of your companion — identity, care routine, and health history — kept on file for every stay.</p>
+  
 </div>
+
+<div class="shell">
+  <div class="pages">
+
+    <div id="success-message" class="success">
+      <div class="seal">✓</div>
+      <h2>Registration recorded</h2>
+      <p>Thank you for entrusting us with your companion's care. A confirmation with the full record has been sent to your inbox.</p>
+      <a href="/welcome">Submit another form</a>
+    </div>
+
+    <div id="form-wrapper">
+      <p class="mandatory-note">* Required fields</p>
+
+      <form id="boarding-form" enctype="multipart/form-data">
+
+        <section class="page" id="sec-identity">
+          <div class="page-head"><span class="num">I</span><h2>Hi! This is my info</h2></div>
+
+          <div class="field"><label for="name" class="req">Name</label>
+            <input type="text" id="name" name="name" required></div>
+
+          <div class="field"><label for="pet_type" class="req">Pet Type</label>
+            <select id="pet_type" name="pet_type" required>
+              <option value="" disabled selected>Select Dog or Cat</option>
+              <option value="Dog">Dog</option>
+              <option value="Cat">Cat</option>
+            </select></div>
+
+          <div class="field"><label for="breed" class="req">Breed</label>
+            <input type="text" id="breed" name="breed" list="breed-options" placeholder="Please select Dog or Cat first" disabled required>
+            <datalist id="breed-options"></datalist></div>
+
+          <div class="field"><label class="req">Gender</label>
+            <div class="radio-row">
+              <label><input type="radio" id="male" name="gender" value="male" required> Male</label>
+              <label><input type="radio" id="female" name="gender" value="female" required> Female</label>
+            </div></div>
+
+          <div class="field"><label class="req">Age</label>
+            <div class="age-row">
+              <input type="number" id="age_years" placeholder="Years" min="0" required>
+              <input type="number" id="age_months" placeholder="Months" min="0" max="11" required>
+            </div>
+            <input type="hidden" id="age" name="age"></div>
+
+          <div class="field"><label>Neutered / Spayed</label>
+            <div class="radio-row">
+              <label><input type="radio" id="yes" name="neutered_spayed" value="yes"> Yes</label>
+              <label><input type="radio" id="no" name="neutered_spayed" value="no"> No</label>
+            </div></div>
+
+          <div class="field"><label for="color" class="req">Color</label>
+            <input type="text" id="color" name="color" required></div>
+
+          <div class="field"><label for="weight">Weight</label>
+            <input type="text" id="weight" name="weight"></div>
+        </section>
+
+        <section class="page" id="sec-guardian">
+          <div class="page-head"><span class="num">II</span><h2>My Parent's Info</h2></div>
+
+          <div class="field"><label for="parent_name" class="req">Parent's Name</label>
+            <input type="text" id="parent_name" name="parent_name" required></div>
+
+          <div class="field"><label for="address" class="req">Address</label>
+            <input type="text" id="address" name="address" required></div>
+
+          <div class="field"><label for="phone" class="req">Phone No.</label>
+            <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" maxlength="10" placeholder="10-digit number" required oninput="this.value = this.value.replace(/[^0-9]/g, '')"></div>
+
+          <div class="field"><label for="email" class="req">Email Address</label>
+            <input type="email" id="email" name="email" required></div>
+
+          <div class="field"><label for="id_proof" class="req">Parent's ID Proof</label>
+            <input type="file" id="id_proof" name="id_proof" accept="image/*,application/pdf" required></div>
+
+          <div class="field"><label for="referred_by">Referred by</label>
+            <input type="text" id="referred_by" name="referred_by"></div>
+
+          <div class="field"><label for="emergency_contact_name">Emergency Contact Name</label>
+            <input type="text" id="emergency_contact_name" name="emergency_contact_name"></div>
+
+          <div class="field"><label for="emergency_phone">Emergency Phone No.</label>
+            <input type="tel" id="emergency_phone" name="emergency_phone" pattern="[0-9]{10}" maxlength="10" placeholder="10-digit number" oninput="this.value = this.value.replace(/[^0-9]/g, '')"></div>
+        </section>
+
+        <section class="page" id="sec-vet">
+          <div class="page-head"><span class="num">III</span><h2>Veterinarian</h2></div>
+
+          <div class="field"><label for="vet_name">Vet Name</label>
+            <input type="text" id="vet_name" name="vet_name"></div>
+          <div class="field"><label for="vet_contact">Vet Contact</label>
+            <input type="text" id="vet_contact" name="vet_contact"></div>
+          <div class="field"><label for="vet_address">Vet Address</label>
+            <input type="text" id="vet_address" name="vet_address"></div>
+        </section>
+
+        <section class="page" id="sec-diet">
+          <div class="page-head"><span class="num">IV</span><h2>Diet</h2></div>
+
+          <div class="field"><label for="morning">Morning</label>
+            <input type="text" id="morning" name="morning"></div>
+          <div class="field"><label for="afternoon">Afternoon</label>
+            <input type="text" id="afternoon" name="afternoon"></div>
+          <div class="field"><label for="evening">Evening</label>
+            <input type="text" id="evening" name="evening"></div>
+          <div class="field"><label for="night">Night</label>
+            <input type="text" id="night" name="night"></div>
+        </section>
+
+        <section class="page" id="sec-immunization">
+          <div class="page-head">
+            <span class="num">V</span><h2>Immunization</h2>
+            <span class="stamp-hint">Record stamps once both dates are entered</span>
+          </div>
+
+          <div class="vax" data-prefix="anti_rabies">
+            <div class="vax-title"><span class="dot"></span>Anti Rabies</div>
+            <div class="vax-grid">
+              <div><label for="anti_rabies_given_date" class="req">Given Date</label>
+                <input type="date" id="anti_rabies_given_date" name="anti_rabies_given_date" required></div>
+              <div><label for="anti_rabies_due_date" class="req">Due Date</label>
+                <input type="date" id="anti_rabies_due_date" name="anti_rabies_due_date" required readonly></div>
+              <div><label for="anti_rabies_proof" class="req">Upload Proof</label>
+                <input type="file" id="anti_rabies_proof" name="anti_rabies_proof" accept="image/*,application/pdf" required></div>
+            </div>
+            <div class="stamp">Recorded</div>
+          </div>
+
+          <div class="vax" data-prefix="nine_in_one">
+            <div class="vax-title"><span class="dot"></span>9 in 1</div>
+            <div class="vax-grid">
+              <div><label for="nine_in_one_given_date" class="req">Given Date</label>
+                <input type="date" id="nine_in_one_given_date" name="nine_in_one_given_date" required></div>
+              <div><label for="nine_in_one_due_date" class="req">Due Date</label>
+                <input type="date" id="nine_in_one_due_date" name="nine_in_one_due_date" required readonly></div>
+              <div><label for="nine_in_one_proof" class="req">Upload Proof</label>
+                <input type="file" id="nine_in_one_proof" name="nine_in_one_proof" accept="image/*,application/pdf" required></div>
+            </div>
+            <div class="stamp">Recorded</div>
+          </div>
+
+          <div class="vax" data-prefix="canine_corona">
+            <div class="vax-title"><span class="dot"></span>Canine Corona</div>
+            <div class="vax-grid">
+              <div><label for="canine_corona_given_date" class="req">Given Date</label>
+                <input type="date" id="canine_corona_given_date" name="canine_corona_given_date" required></div>
+              <div><label for="canine_corona_due_date" class="req">Due Date</label>
+                <input type="date" id="canine_corona_due_date" name="canine_corona_due_date" required readonly></div>
+              <div><label for="canine_corona_proof" class="req">Upload Proof</label>
+                <input type="file" id="canine_corona_proof" name="canine_corona_proof" accept="image/*,application/pdf" required></div>
+            </div>
+            <div class="stamp">Recorded</div>
+          </div>
+
+          <div class="vax" data-prefix="kennel_cough">
+            <div class="vax-title"><span class="dot"></span>Kennel Cough</div>
+            <div class="vax-grid">
+              <div><label for="kennel_cough_given_date" class="req">Given Date</label>
+                <input type="date" id="kennel_cough_given_date" name="kennel_cough_given_date" required></div>
+              <div><label for="kennel_cough_due_date" class="req">Due Date</label>
+                <input type="date" id="kennel_cough_due_date" name="kennel_cough_due_date" required readonly></div>
+              <div><label for="kennel_cough_proof" class="req">Upload Proof</label>
+                <input type="file" id="kennel_cough_proof" name="kennel_cough_proof" accept="image/*,application/pdf" required></div>
+            </div>
+            <div class="stamp">Recorded</div>
+          </div>
+
+          <div class="vax" data-prefix="deworming">
+            <div class="vax-title"><span class="dot"></span>Deworming</div>
+            <div class="vax-grid">
+              <div><label for="deworming_given_date" class="req">Given Date</label>
+                <input type="date" id="deworming_given_date" name="deworming_given_date" required></div>
+              <div><label for="deworming_due_date" class="req">Due Date</label>
+                <input type="date" id="deworming_due_date" name="deworming_due_date" required readonly></div>
+              <div><label for="deworming_proof" class="req">Upload Proof</label>
+                <input type="file" id="deworming_proof" name="deworming_proof" accept="image/*,application/pdf" required></div>
+            </div>
+            <div class="stamp">Recorded</div>
+          </div>
+        </section>
+
+        <section class="page" id="sec-health">
+          <div class="page-head"><span class="num">VI</span><h2>Health Notes</h2></div>
+
+          <div class="field"><label for="food_allergies">Food Allergies</label>
+            <input type="text" id="food_allergies" name="food_allergies"></div>
+          <div class="field"><label for="major_surgery">Major Surgery / Illness</label>
+            <textarea id="major_surgery" name="major_surgery" rows="3"></textarea></div>
+          <div class="field"><label for="special_needs">Special Needs / Comments</label>
+            <textarea id="special_needs" name="special_needs" rows="3"></textarea></div>
+          <div class="field"><label for="attacks">Prior Incidents</label>
+            <textarea id="attacks" name="attacks" rows="3" placeholder="Has your pet ever attacked a person or animal? If yes, please explain."></textarea></div>
+        </section>
+
+        <div class="actions">
+          <button type="submit" id="submit-btn" class="btn-submit">Submit Registration</button>
+          <button type="reset" class="btn-reset">Clear Form</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  // --- AGE LOGIC ---
+  const yearInput = document.getElementById('age_years');
+  const monthInput = document.getElementById('age_months');
+  const hiddenAge = document.getElementById('age');
+
+  function updateHiddenAge() {
+    const y = yearInput.value || "0";
+    const m = monthInput.value || "0";
+    hiddenAge.value = `${y} Years, ${m} Months`;
+  }
+  if (monthInput && yearInput) {
+    monthInput.addEventListener('input', function() {
+      if (this.value && !yearInput.value) yearInput.value = 0;
+      updateHiddenAge();
+    });
+    yearInput.addEventListener('input', updateHiddenAge);
+  }
+
+  // --- BREED DROPDOWN ---
+  const dogBreeds = ["Labrador Retriever","German Shepherd","Golden Retriever","French Bulldog","Bulldog","Poodle","Beagle","Rottweiler","German Shorthaired Pointer","Dachshund","Pembroke Welsh Corgi","Australian Shepherd","Yorkshire Terrier","Boxer","Great Dane","Siberian Husky","Cavalier King Charles Spaniel","Doberman Pinscher","Miniature Schnauzer","Shih Tzu","Boston Terrier","Pomeranian","Havanese","Shetland Sheepdog","Brittany","Pug","Chihuahua","Indie / Desi","Mixed Breed","Other"];
+  const catBreeds = ["Persian","Maine Coon","Ragdoll","British Shorthair","Sphynx","Abyssinian","American Shorthair","Scottish Fold","Siamese","Bengal","Russian Blue","Norwegian Forest Cat","Siberian","Birman","Bombay","Indie / Desi","Mixed Breed","Other"];
+
+  const petTypeSelect = document.getElementById('pet_type');
+  const breedInput = document.getElementById('breed');
+  const breedDatalist = document.getElementById('breed-options');
+
+  if (petTypeSelect && breedInput && breedDatalist) {
+    petTypeSelect.addEventListener('change', function() {
+      const selectedType = this.value;
+      breedDatalist.innerHTML = '';
+      breedInput.value = '';
+      breedInput.disabled = false;
+      breedInput.placeholder = "Start typing to search breeds...";
+      let breedsToLoad = selectedType === 'Dog' ? dogBreeds : catBreeds;
+      breedsToLoad.forEach(breed => {
+        const option = document.createElement('option');
+        option.value = breed;
+        breedDatalist.appendChild(option);
+      });
+    });
+  }
+
+  // --- VACCINE DUE DATES + STAMP REVEAL ---
+  function addOneYearToDate(dateString) {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    date.setFullYear(date.getFullYear() + 1);
+    return date.toISOString().split('T')[0];
+  }
+
+  const vaccinePrefixes = ['anti_rabies', 'nine_in_one', 'canine_corona', 'kennel_cough', 'deworming'];
+
+  vaccinePrefixes.forEach(prefix => {
+    const givenInput = document.getElementById(`${prefix}_given_date`);
+    const dueInput = document.getElementById(`${prefix}_due_date`);
+    const card = document.querySelector(`.vax[data-prefix="${prefix}"]`);
+    const stamp = card ? card.querySelector('.stamp') : null;
+
+    function refreshStamp() {
+      if (stamp) stamp.classList.toggle('show', !!(givenInput.value && dueInput.value));
+    }
+
+    if (givenInput && dueInput) {
+      givenInput.addEventListener('change', function() {
+        dueInput.value = this.value ? addOneYearToDate(this.value) : '';
+        refreshStamp();
+      });
+    }
+  });
+
+  // --- FORM SUBMISSION ---
+  const boardingForm = document.getElementById('boarding-form');
+  if (boardingForm) {
+    boardingForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      updateHiddenAge();
+
+      const form = e.target;
+      const submitBtn = document.getElementById('submit-btn');
+      const formData = new FormData(form);
+
+      submitBtn.disabled = true;
+      submitBtn.innerText = 'Submitting...';
+
+      try {
+        const response = await fetch('/boarding', { method: 'POST', body: formData });
+
+        if (!response.ok) {
+          const textResult = await response.text();
+          try {
+            const jsonResult = JSON.parse(textResult);
+            alert('Error: ' + jsonResult.message);
+          } catch {
+            console.error("Raw Server Response:", textResult);
+            alert('Server returned an error: ' + textResult);
+          }
+          submitBtn.disabled = false;
+          submitBtn.innerText = 'Submit Registration';
+          return;
+        }
+
+        const result = await response.json();
+        if (result.success) {
+          document.getElementById('form-wrapper').style.display = 'none';
+          document.getElementById('success-message').style.display = 'block';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          alert('Error: ' + result.message);
+          submitBtn.disabled = false;
+          submitBtn.innerText = 'Submit Registration';
+        }
+      } catch (error) {
+        console.error(error);
+        alert('A network error occurred. Please check your server console for details.');
+        submitBtn.disabled = false;
+        submitBtn.innerText = 'Submit Registration';
+      }
+    });
+  }
+</script>
 
 </body>
 </html>

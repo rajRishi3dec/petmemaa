@@ -121,20 +121,13 @@ document.addEventListener('DOMContentLoaded', () => {
     boardingForm.addEventListener('submit', async (event) => {
       event.preventDefault(); // Prevent default form submission
 
-      const formData = new FormData(boardingForm);
+      // IMPORTANT: send multipart/form-data (FormData) so multer can receive uploaded files.
+      const fd = new FormData(boardingForm);
 
-      // Convert formData to JSON
-      const jsonData = {};
-      formData.forEach((value, key) => { jsonData[key] = value; });
-
-      // Send boarding form request
       try {
         const response = await fetch('/boarding', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(jsonData),
+          body: fd, // no Content-Type header; browser sets it with boundary
         });
 
         if (response.ok) {

@@ -22,7 +22,8 @@
     "express-session": "^1.18.2",
     "mongodb": "^6.18.0",
     "mongoose": "^8.24.1",
-    "nodemailer": "^7.0.5",
+    "multer": "^2.2.0",
+    "nodemailer": "^7.0.13",
     "session": "^0.1.0"
   },
   "devDependencies": {
