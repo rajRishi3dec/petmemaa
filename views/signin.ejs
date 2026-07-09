@@ -2,16 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Signin</title>
   <style>
+    /* Added universal box-sizing to keep padding inside element widths */
+    * {
+      box-sizing: border-box;
+    }
     body {
       font-family: Arial, sans-serif;
       background-color: #f0f0f0;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
       margin: 0;
+      padding: 20px; /* Added padding so it doesn't touch screen edges on mobile */
     }
     h1 {
       text-align: center;
@@ -19,37 +25,38 @@
     }
     form {
       background-color: #ffffff;
-      padding: 20px;
+      padding: 30px 20px;
       border-radius: 8px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      width: 300px;
+      width: 100%;
+      max-width: 350px; /* Responsive width instead of fixed 300px */
       display: flex;
       flex-direction: column;
       align-items: center;
     }
     img {
-      width: 300px;
-      height: 200px;
-      border-radius: none;
+      width: 100%;
+      max-width: 300px;
+      height: auto; /* Keeps aspect ratio intact */
       margin-bottom: 20px;
     }
     label {
       display: block;
       margin-bottom: 8px;
-      width: 100%; /* Ensure labels are full width */
+      width: 100%;
     }
     input[type="text"],
     input[type="password"] {
-      width: calc(100% - 20px); /* Adjusted to fit the container */
-      padding: 8px;
+      width: 100%; /* No need for calc() with box-sizing */
+      padding: 10px;
       margin-bottom: 15px;
       border: 1px solid #ccc;
       border-radius: 4px;
-      font-size: 14px;
+      font-size: 16px; /* 16px prevents iOS Safari from automatically zooming in */
     }
     button[type="submit"] {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       background-color: #4CAF50;
       color: white;
       border: none;
@@ -64,8 +71,8 @@
 </head>
 <body>
   <div class="container">
-    <h1>Signin</h1>
     <form id="signin-form" action="/signin" method="post">
+      <h1>Signin</h1>
       <img src="pet1.jpg" alt="User Image">
       <label for="username">Username:</label>
       <input type="text" id="username" name="username" required>
